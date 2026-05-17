@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Погодный дневник городов</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="weather">
+      <aside class="weather__panel">
+        <header class="weather__header">
+          <span class="weather__logo">пд</span>
+          <div>
+            <h1 class="weather__title">Погодный дневник городов</h1>
+          </div>
+        </header>
+
+        <img class="weather__image" src="/static/img/sky.jpg" alt="Небо с облаками" />
+
+        <p class="weather__text">
+          Карта показывает тысячу самых крупных населенных пунктов.
+        </p>
+
+        <form class="weather__search" id="search-form" autocomplete="off">
+          <label class="weather__caption" for="settlement-search">Поиск города</label>
+          <div class="weather__inputs">
+            <input class="weather__field" id="settlement-search" name="q" type="search" placeholder="Казань, Уфа, Тула" />
+            <button class="weather__btn" type="submit">Найти</button>
+          </div>
+          <div class="weather__results" id="search-results" aria-live="polite"></div>
+        </form>
+
+        <section class="city" id="active-place">
+          <p class="weather__label">карточка места</p>
+          <h2 class="city__title">Выберите точку на карте</h2>
+          <p class="city__text">После клика появится регион, население и прогноз на несколько дней.</p>
+        </section>
+
+        <section class="info">
+          <p class="weather__label">как пользоваться</p>
+          <ol class="info__list">
+            <li class="info__item">
+              <span class="info__num">1</span>
+              <div>
+                <strong>Найдите город</strong>
+                <p>Введите название в поиск или приблизьте карту вручную.</p>
+              </div>
+            </li>
+            <li class="info__item">
+              <span class="info__num">2</span>
+              <div>
+                <strong>Нажмите точку</strong>
+                <p>Всплывающее окно загрузит прогноз по координатам.</p>
+              </div>
+            </li>
+            <li class="info__item">
+              <span class="info__num">3</span>
+              <div>
+                <strong>Смотрите графики</strong>
+                <p>Температура, осадки и ветер показаны отдельно.</p>
+              </div>
+            </li>
+          </ol>
+        </section>
+
+        <section class="legend">
+          <p class="weather__label">легенда карты</p>
+          <div class="legend__row">
+            <span class="legend__dot legend__dot--blue"></span>
+            <p><strong>Крупные города</strong><br />больше 900 тысяч жителей</p>
+          </div>
+          <div class="legend__row">
+            <span class="legend__dot legend__dot--green"></span>
+            <p><strong>Средние города</strong><br />от 100 до 300 тысяч жителей</p>
+          </div>
+          <div class="legend__row">
+            <span class="legend__dot legend__dot--orange"></span>
+            <p><strong>Небольшие точки</strong><br />остальные населенные пункты</p>
+          </div>
+        </section>
+
+        <section class="cards">
+          <p class="weather__label">что в прогнозе</p>
+          <div class="cards__grid">
+            <article class="cards__item">
+              <span>°C</span>
+              <strong>Температура</strong>
+              <p>Показывает изменение по часам.</p>
+            </article>
+            <article class="cards__item">
+              <span>мм</span>
+              <strong>Осадки</strong>
+              <p>Помогает понять, когда ждать дождь.</p>
+            </article>
+            <article class="cards__item">
+              <span>м/с</span>
+              <strong>Ветер</strong>
+              <p>Отдельный график силы ветра.</p>
+            </article>
+          </div>
+        </section>
+
+      </aside>
+
+      <main class="map">
+        <div class="map__toolbar">
+          <div>
+            <span class="map__count" id="settlement-count">Загрузка точек...</span>
+            <strong class="map__source">Выберите город на карте или через поиск</strong>
+          </div>
+          <button class="map__btn" type="button" id="reset-map">Вся карта</button>
+        </div>
+        <div class="map__canvas" id="map" aria-label="Карта населенных пунктов России"></div>
+      </main>
+    </div>
+
+    <template id="result-template">
+      <button type="button" class="weather__result">
+        <strong></strong>
+        <span></span>
+      </button>
+    </template>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
